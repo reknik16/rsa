@@ -89,7 +89,7 @@ class PrimeGenerator:
             if is_prime[i]:
                 self.__primes.append(i)
 
-    def __is_prime(self, num):
+    def is_prime(self, num):
         """
         Проверка числа на простоту
         """
@@ -109,9 +109,15 @@ class PrimeGenerator:
         """
 
         result = 2 * random.randrange(2, number // 2 + 1) - 1
-        while not self.__is_prime(result):
+        while not self.is_prime(result):
             result = 2 * random.randrange(2, number // 2 + 1) - 1
         return result
+
+    def get_prime_by_number(self, number):
+        if len(self.__primes) < number:
+            raise Exception()
+        return self.__primes[number]
+
 
     @staticmethod
     def __rabin_miller(n, r):
@@ -165,17 +171,3 @@ class RSA:
         n = p * q
         d = x % f
         return e, d, n, p, q
-
-
-if __name__ == "__main__":
-    rsa_gen = RSA()
-    e, d, n, p, q = rsa_gen.generate_key_rsa(10**57)
-    M = random.randrange(0, n)
-    sign = MathCalculator.pow(M, d, p, q)
-    print(f"М = {M}\nПодпись = {sign}")
-
-    # ВЫНЕСТИ В ТЕСТ check_rsa
-    check = MathCalculator.pow(sign, e, p, q)
-    print(f"М' = {check}")
-    if check == M:
-        print("OK")
