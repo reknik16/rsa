@@ -133,7 +133,7 @@ class PrimeGenerator:
             binary_view.append(b % 2)
             b = b // 2
 
-        for j in range(1, r + 1):
+        for _ in range(1, r + 1):
             a = random.randrange(2, n)
             if MathCalculator.euclid(a, n) > 1:
                 return False
