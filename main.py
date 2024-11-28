@@ -119,7 +119,7 @@ class PrimeGenerator:
         return self.__primes[number]
 
     @staticmethod
-    def __rabin_miller(n, r):
+    def rabin_miller(n, r):
         """
         Тест Рабина-Миллера для проверки числа n на простоту
         """

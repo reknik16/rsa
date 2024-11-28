@@ -21,6 +21,10 @@ class TestRSA:
         result = MathCalculator.pow(number, degree, mod1, mod2)
         assert result == expected
 
+    def test_pow_raise_exception(self):
+        with pytest.raises(ZeroDivisionError):
+            MathCalculator.pow(15, 2, 0, 1)
+
     def test_is_prime(self):
         rand = random.randint(0, 90)
         prime_gen = PrimeGenerator(100000)
@@ -32,3 +36,11 @@ class TestRSA:
         with pytest.raises(Exception):
             prime_gen.get_prime_by_number(n)
 
+    def test_extended_euclid(self):
+        result = MathCalculator.extended_euclid(35, 15)
+        assert (5, 1, -2) == result
+
+    def test_rabin_muller(self):
+        generator = PrimeGenerator(3000)
+        prime = generator.generate_prime(50)
+        assert generator.rabin_miller(prime, 30)
