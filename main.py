@@ -101,7 +101,7 @@ class PrimeGenerator:
                     return False
 
         r = 30
-        return self.__rabin_miller(num, r)
+        return self.rabin_miller(num, r)
 
     def generate_prime(self, number):
         """
