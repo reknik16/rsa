@@ -115,9 +115,8 @@ class PrimeGenerator:
 
     def get_prime_by_number(self, number):
         if len(self.__primes) < number:
-            raise Exception()
+            raise IndexError()
         return self.__primes[number]
-
 
     @staticmethod
     def __rabin_miller(n, r):
