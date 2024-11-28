@@ -1,1 +1,51 @@
+name: RSA
 
+on: 
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4 # клонирование репозитория в виртуальную машину
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.12.2'  
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest coverage coveralls
+    
+    - name: Run tests with coverage
+      run: |
+        coverage run -m pytest test.py  
+        coverage report  
+        coverage xml  
+    
+    - name: Show coverage report
+      run: |
+        coverage report 
+    
+    - name: Submit coverage to Coveralls # загрузка отчёта о покрытии кода на платформу Coveralls.io.
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_SECRET }}
+      run: |
+        coveralls
+    
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      with:
+        args: >
+          -Dsonar.projectKey=reknik16_rsa
+          -Dsonar.organization=reknik16
+          -Dsonar.sources=.
+          -Dsonar.python.coverage.reportPaths=coverage.xml
+          -Dsonar.python.version=3.12.12
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
