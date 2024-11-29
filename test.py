@@ -44,3 +44,23 @@ class TestRSA:
         generator = PrimeGenerator(3000)
         prime = generator.generate_prime(50)
         assert generator.rabin_miller(prime, 30)
+
+    def test_pow_invalid_modulo(self):
+        """Тест MathCalculator.pow с некорректным модулем"""
+        with pytest.raises(ZeroDivisionError):
+            MathCalculator.pow(10, 5, 0, 7)  # mod1 = 0 недопустим
+
+
+    def test_is_prime_large_non_integer(self):
+        """Тест PrimeGenerator.is_prime с нецелым числом"""
+        prime_gen = PrimeGenerator(100)
+        with pytest.raises(TypeError):
+            prime_gen.is_prime(19.5)  # Проверка нецелого числа
+
+    def test_generate_prime_invalid_range(self):
+        """Тест PrimeGenerator.generate_prime с недопустимым диапазоном"""
+        prime_gen = PrimeGenerator(100)
+        with pytest.raises(ValueError):
+            prime_gen.generate_prime(1)  # Диапазон слишком мал для генерации простого числа
+
+

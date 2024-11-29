@@ -48,6 +48,7 @@ class MathCalculator:
         """
         Расширенный алгоритм Евклида для нахождения НОД(a, b)
         нахождения обратного элемента в мультипликативной группе
+        ax+by=НОД(a,b)
         """
         x = 1
         y = 0
@@ -170,3 +171,14 @@ class RSA:
         n = p * q
         d = x % f
         return e, d, n, p, q
+
+# rsa_gen = RSA()
+# e, d, n, p, q = rsa_gen.generate_key_rsa(10 ** 57)
+# M = random.randrange(0, n)
+# sign = MathCalculator.pow(M, d, p, q)
+#
+# check = MathCalculator.pow(sign, e, p, q)
+#
+# print('M=', M)
+# print('Подпись=', sign)
+# print('M\'=', check)
