@@ -63,4 +63,7 @@ class TestRSA:
         with pytest.raises(ValueError):
             prime_gen.generate_prime(1)  # Диапазон слишком мал для генерации простого числа
 
-
+    def test_extended_euclid_zero_arguments(self):
+        """Тест MathCalculator.extended_euclid с нулевым аргументом"""
+        result = MathCalculator.extended_euclid(0, 10)
+        assert result == (10, 0, 1)  # Проверка, что алгоритм корректно обрабатывает ноль
