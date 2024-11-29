@@ -45,10 +45,10 @@ class TestRSA:
         prime = generator.generate_prime(50)
         assert generator.rabin_miller(prime, 30)
 
-    def test_pow_invalid_modulo(self):
-        """Тест MathCalculator.pow с некорректным модулем"""
-        with pytest.raises(ZeroDivisionError):
-            MathCalculator.pow(10, 5, 0, 7)  # mod1 = 0 недопустим
+    def test_rabin_miller_non_positive_number(self):
+        """Тест PrimeGenerator.rabin_miller с неположительным числом"""
+        with pytest.raises(ValueError):
+            PrimeGenerator.rabin_miller(-5, 10)  # Тестирование отрицательного числа
 
 
     def test_is_prime_large_non_integer(self):
