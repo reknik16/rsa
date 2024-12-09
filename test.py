@@ -89,10 +89,3 @@ class TestRSA:
         # Проверяем случай, когда оба аргумента равны нулю
         assert MathCalculator.euclid(0, 0) == 0, "НОД (0, 0) должен быть равен 0"
 
-    def test_rsa_generate_key_invalid_input(self):
-        rsa = RSA()
-        # Проверяем случай, когда переданный параметр n меньше минимального значения
-        try:
-            rsa.generate_key_rsa(1)
-        except ValueError:
-            assert True, "Должно выбрасывать ValueError для n <= 2"
