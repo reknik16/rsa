@@ -95,4 +95,4 @@ class TestRSA:
         try:
             rsa.generate_key_rsa(1)
         except ValueError:
-            assert ValueError, "Должно выбрасывать ValueError для n <= 2"
+            assert True, "Должно выбрасывать ValueError для n <= 2"
