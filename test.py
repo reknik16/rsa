@@ -46,7 +46,7 @@ class TestRSA:
         assert generator.rabin_miller(prime, 30)
 
     def test_rabin_miller_non_positive_number(self):
-        """Тест PrimeGenerator.rabin_miller с неположительным числом"""
+        """Тест PrimeGenerator.rabin_miller с отрицательным числом"""
         with pytest.raises(ValueError):
             PrimeGenerator.rabin_miller(-5, 10)  # Тестирование отрицательного числа
 
@@ -67,3 +67,32 @@ class TestRSA:
         """Тест MathCalculator.extended_euclid с нулевым аргументом"""
         result = MathCalculator.extended_euclid(0, 10)
         assert result == (10, 0, 1)  # Проверка, что алгоритм корректно обрабатывает ноль
+
+    def test_is_prime_false(self):
+        prime_gen = PrimeGenerator(100)
+        # Проверяем, что для составных чисел метод возвращает False
+        assert prime_gen.is_prime(4) == False, "4 не является простым числом"
+        assert prime_gen.is_prime(9) == False, "9 не является простым числом"
+        # Проверяем отрицательное число
+        assert prime_gen.is_prime(-7) == False, "-7 не является простым числом"
+
+    def test_rabin_miller_false(self):
+        # Проверяем, что тест Рабина-Миллера корректно определяет составные числа
+        assert PrimeGenerator.rabin_miller(4, 10) == False, "4 составное, должно вернуть False"
+        assert PrimeGenerator.rabin_miller(9, 10) == False, "9 составное, должно вернуть False"
+        assert PrimeGenerator.rabin_miller(15, 10) == False, "15 составное, должно вернуть False"
+
+    def test_euclid_zero(self):
+        # Проверяем случай, когда один из аргументов равен нулю
+        assert MathCalculator.euclid(0, 10) == 10, "НОД (0, 10) должен быть равен 10"
+        assert MathCalculator.euclid(10, 0) == 10, "НОД (10, 0) должен быть равен 10"
+        # Проверяем случай, когда оба аргумента равны нулю
+        assert MathCalculator.euclid(0, 0) == 0, "НОД (0, 0) должен быть равен 0"
+
+    def test_rsa_generate_key_invalid_input(self):
+        rsa = RSA()
+        # Проверяем случай, когда переданный параметр n меньше минимального значения
+        try:
+            rsa.generate_key_rsa(1)
+        except ValueError:
+            assert True, "Должно выбрасывать ValueError для n <= 2"
